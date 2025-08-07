@@ -112,6 +112,8 @@ namespace WebApplication1.Controllers
         {
             _logger.LogInformation("UploadExcel called.");
 
+            bool check = false;
+
             if (file == null || file.Length == 0)
             {
                 _logger.LogWarning("No file uploaded.");
@@ -162,6 +164,9 @@ namespace WebApplication1.Controllers
                             continue;
                         }
 
+                        check = true;
+
+
                         var insertEmployee = new SqlCommand(@"
                             INSERT INTO Employees (
                                 EmpId, Name, Designation, Reporting_To, Billable,
@@ -198,7 +203,13 @@ namespace WebApplication1.Controllers
                     await transaction.CommitAsync();
                     _logger.LogInformation("Excel data uploaded successfully.");
                     //return Ok("Excel data imported successfully.");
-                    return Ok(new { message = "Excel data imported successfully." });
+                    if (check)
+                    {
+                        return Ok(new { message = "Excel data imported successfully." });
+                    }
+                    else { 
+                        return BadRequest(new { message = "Excel data import failed [Duplicate Data Insertion]" }); 
+                    }
                 }
                 catch (Exception innerEx)
                 {

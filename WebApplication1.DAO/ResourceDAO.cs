@@ -43,6 +43,7 @@ namespace WebApplication1.DAO
                         Reporting_To = reader["Reporting_To"].ToString(),
                         Billable = Convert.ToBoolean(reader["Billable"]),
                         Skills = reader["Skills"].ToString(),
+                        
                         Project_Allocation = reader["Project_Allocation"].ToString(),
                         Location = reader["Location"].ToString(),
                         Email = reader["Email"].ToString(),
@@ -86,6 +87,7 @@ namespace WebApplication1.DAO
                         Reporting_To = reader["Reporting_To"].ToString(),
                         Billable = Convert.ToBoolean(reader["Billable"]),
                         Skills = reader["Skills"].ToString(),
+                       
                         Project_Allocation = reader["Project_Allocation"].ToString(),
                         Location = reader["Location"].ToString(),
                         Email = reader["Email"].ToString(),

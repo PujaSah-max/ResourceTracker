@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Resource.DAO;
+using Resource.DAO.Interface;
+using Resource.Orchestration;
+using Resource.Orchestration.Orchestration;
 using WebApplication1.Controllers;
 using WebApplication1.DAO;
 using WebApplication1.DAO.Interface;
@@ -39,6 +43,10 @@ builder.Services.AddSwaggerGen(options =>
         Description = swaggerDescription
     });
 });
+
+// Register DAO and Orchestration For Authentication and Authorization
+builder.Services.AddScoped<IAuthDAO, AuthDAO>();
+builder.Services.AddScoped<IAuthOrchestration, AuthOrchestration>();
 
 // Register DAO and Orchestration
 builder.Services.AddScoped<IResourceDAO, ResourceDAO>();
