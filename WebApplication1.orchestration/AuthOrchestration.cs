@@ -13,6 +13,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
+
 namespace Resource.Orchestration
 {
     public class AuthOrchestration : IAuthOrchestration
@@ -43,7 +46,7 @@ namespace Resource.Orchestration
                 {
                     return null;
                 }
-                var token = GetJwtToken();
+                var token = GetJwtToken(loginResult);
                 return token;
 
             }
@@ -53,11 +56,20 @@ namespace Resource.Orchestration
             }
         }
 
-        private string GetJwtToken()
+        //private string? GetJwtToken(LoginResponseDto loginResult)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //private string GetJwtToken(LoginResponseDto loginResult)
+        private string GetJwtToken(LoginResponseDto user)
+
         {
             var claims = new List<Claim>
             {
-                new Claim("Name", "Puja")
+                //new Claim("Name", "Puja")
+                //new Claim("Name", user.User.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

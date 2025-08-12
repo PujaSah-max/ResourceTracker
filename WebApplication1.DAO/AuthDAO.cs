@@ -34,6 +34,7 @@ namespace Resource.DAO
             command.Parameters.AddWithValue("@userName", signup.UserName);
             command.Parameters.AddWithValue("@email", signup.Email);
             command.Parameters.AddWithValue("@hashPassword", signup.Password);
+            command.Parameters.AddWithValue("@Role", signup.Role);
 
             var UserId = new SqlParameter("@userId", SqlDbType.Int)
             {
@@ -63,13 +64,20 @@ namespace Resource.DAO
                 Direction = ParameterDirection.Output
             };
 
+            var role = new SqlParameter("@Role", SqlDbType.VarChar, 100)
+            {
+                Direction = ParameterDirection.Output
+            };
+
             command.Parameters.Add(hashPassword);
+            command.Parameters.Add(role);
 
             await connection.OpenAsync();
             await command.ExecuteNonQueryAsync();
 
             return new LoginResponseDto { 
-                HashPassword = hashPassword.Value != DBNull.Value ? (string)hashPassword.Value : null
+                HashPassword = hashPassword.Value != DBNull.Value ? (string)hashPassword.Value : null,
+                Role = role.Value != DBNull.Value ? (string)role.Value : null
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -26,6 +27,7 @@ namespace WebApplication1.Controllers
             _configuration = configuration;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet(APIUri.GetAllEmployee)]
         public async Task<ActionResult<List<ResourceRequest>>> GetAll()
         {
@@ -73,7 +75,7 @@ namespace WebApplication1.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-
+        [Authorize(Roles = "Manager,Admin")]
         [HttpPut(APIUri.UpdateEmployee)]
         public async Task<ActionResult<ResourceResponse>> Update([FromBody] ResourceRequest employee)
         {

@@ -9,5 +9,6 @@ namespace Resource.DAO.Models.Auth
     public class LoginResponseDto
     {
         public string? HashPassword { get; set; }
+        public string? Role { get; set; }
     }
 }
